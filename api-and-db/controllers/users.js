@@ -6,8 +6,8 @@ export const index = (req, res, next) => {
   // Find all Users and return json response
   User.find().lean().exec((err, users) => res.json(
 
-    { users: users.map(movie => ({
-      ...movie
+    { users: users.map(user => ({
+      ...user
     //   ,
     //   days,     // and append days
     //   times,    // and times to each

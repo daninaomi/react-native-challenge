@@ -1,7 +1,13 @@
-import express from 'express';
-import morgan from 'morgan';
-import mongoose from 'mongoose';
-import router from './router';
+// import express from 'express';
+// import morgan from 'morgan';
+// import mongoose from 'mongoose';
+
+// import router from './router';
+const express = require('express')
+const morgan = require('morgan')
+const mongoose = require('mongoose')
+
+const router = require('./router')
 
 // Connect to MongoDB
 mongoose.connect('mongodb://localhost/users');
