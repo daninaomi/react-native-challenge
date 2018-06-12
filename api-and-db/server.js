@@ -1,26 +1,26 @@
-// import express from 'express';
-// import morgan from 'morgan';
-// import mongoose from 'mongoose';
+var express = require('express'),
+  app = express(),
+  port = process.env.PORT || 3000,
+  mongoose = require('mongoose'),
+  User = require('./api/models/usersModel'), //created model loading here
+  bodyParser = require('body-parser');
+  
+// mongoose instance connection url connection
+mongoose.Promise = global.Promise;
+// mongoose.connect('mongodb://localhost/Agendadb'); 
+mongoose.connect('mongodb://localhost:27017/AgendaDb'); 
 
-// import router from './router';
-const express = require('express')
-const morgan = require('morgan')
-const mongoose = require('mongoose')
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
-const router = require('./router')
-
-// Connect to MongoDB
-mongoose.connect('mongodb://localhost/users');
-
-// Initialize http server
-const app = express();
-
-// Logger that outputs all requests into the console
-app.use(morgan('combined'));
-// Use v1 as prefix for all API endpoints
-app.use('/v1', router);
-
-const server = app.listen(3000, () => {
-  const { address, port } = server.address();
-  console.log(`Listening at http://${address}:${port}`);
+app.use(function(req, res) {
+  res.status(404).send({url: req.originalUrl + ' not found'})
 });
+
+var routes = require('./api/routes/usersRoutes'); //importing route
+routes(app); //register the route
+
+
+app.listen(port);
+
+console.log('my RESTful API server started on: ' + port);
